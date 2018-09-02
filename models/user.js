@@ -11,6 +11,11 @@ const userSchema = new Schema({
   last_name: { type: String }
 }, { collection : 'users' });
  
-const User = mongoose.model('User', userSchema);
+userSchema.statics.getUser = function(id_user, callback) {
+  this.findOne({id: id_user}, callback);
+}
+
+
+const UserModel = mongoose.model('UserModel', userSchema);
  
-module.exports = User;
+module.exports = UserModel;
