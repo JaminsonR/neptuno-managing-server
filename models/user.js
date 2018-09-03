@@ -12,7 +12,10 @@ const userSchema = new Schema({
 }, { collection : 'users' });
  
 userSchema.statics.getUser = function(id_user, callback) {
-  this.findOne({id: id_user}, callback);
+  this.findOne({id: id_user}).exec(function(err, users) 
+  	{ 
+  		callback(err, users) 
+  	})
 }
 
 

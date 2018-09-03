@@ -1,16 +1,8 @@
-const express = require('express');
-const router = express.Router();
-const UserModel = require('../models/user')
-const mongoose = require('mongoose');
-const url = 'mongodb://localhost:27017/neptuno_dev';
-
-const bodyParser = require('body-parser')
+const UserModel = require('../models/user');
 const jwt = require('../jwt');
-const passport = require("passport");
-
-mongoose.Promise = global.Promise;
-
-function login(req, res) {
+/*
+module.exports = {
+ login : (usr) => {
 
  console.log('post recibido')
     sOptions = {
@@ -18,35 +10,45 @@ function login(req, res) {
     subject: "", 
     audience: "" // this should be provided by client
    }
-    mongoose.connect(url,{  useNewUrlParser: true }, function(err){
-        if(err) throw err;
-        UserModel.find({
-            username : req.body.username, password : req.body.password
-        }, function(err, users){
+   console.log(usr['id'])
+  
+       UserModel.getUser(usr['id'],(err, user) => {
             if(err) throw err;
-            if(users.length === 1){
-                let user = users[0].toJSON()
-                sOptions.subject = user['email']
-                sOptions.audience = user['id']
-                console.log(jwt.sign(user,sOptions))
-                return res.status(200).json({
-                    status: 'success',
-                    data: jwt.sign(user,sOptions)
-                })
-            } else {
-                return res.status(200).json({
-                    status: 'fail',
-                    message: 'Login Failed'
-                })
+            if(user)
+            {
+                if(usr['password'] === user['password'])
+                {
+                    let user = user.toJSON()
+                    sOptions.subject = user['email']
+                    sOptions.audience = user['id']
+                    console.log(jwt.sign(user,sOptions))
+                    return resolve(
+                    {
+                        state: 200,
+                        status: 'success',
+                        data: jwt.sign(user,sOptions)
+                    })
+                }
             }
+            return reject (
+            {   state: 200,
+                status: 'fail',
+                message: 'Login Failed'
+            }
+            )
              
         })
-    });
+       
+       })
 }
 
 
-
-
-module.exports = {
-  login
 }
+
+async function doStuff() {
+  // ...
+}
+// doStuff is defined inside the module so we can call it wherever we want
+
+// Export it to make it available outside
+module.exports.doStuff = doStuff;*/
