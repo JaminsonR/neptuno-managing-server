@@ -25,8 +25,12 @@ const storeSale = (req, res) => {
 
 
 const getSales = (req, res) => {
+  console.log("hola mund")
   SalesModel.getSales((err, sales) => {
-    if (err) return response.serverError(res);
+    if (err){
+      console.log(err)
+      return response.serverError(res);
+    } 
     return response.ok(res, sales);
   })
 }
