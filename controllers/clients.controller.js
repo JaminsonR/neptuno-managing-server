@@ -1,19 +1,14 @@
-const SalesModel = require('../models/sale.model');
+const ClientModel = require('../models/client.model');
 var response = require('../utils/responses');
 
-const storeSale = (req, res) => {
-  let sale = new SalesModel({
+const storeClient = (req, res) => {
+  let client = new ClientModel({
     client_id      : req.body.client_id,
-    date           : req.body.date,
     client_name    : req.body.client_name,
     client_phone   : req.body.client_phone,
     client_address : req.body.client_address,
-    items          : req.body.items,
-    subtotal       : req.body.subtotal,
-    tax            : req.body.tax,
-    total          : req.body.total,
   });
-  sale.storeSale((err) => {
+  sale.storeClient((err) => {
     if (err){
       console.log(err)
       return response.serverError(res);
@@ -24,7 +19,7 @@ const storeSale = (req, res) => {
 
 
 
-const getSales = (req, res) => {
+const getClients = (req, res) => {
   SalesModel.getSales((err, sales) => {
     if (err) return response.serverError(res);
     return response.ok(res, sales);
@@ -33,7 +28,7 @@ const getSales = (req, res) => {
 
 
 module.exports = {
-  storeSale,
-  getSales
+  storeClient,
+  getClient
 }
 
