@@ -20,7 +20,7 @@ const storeClient = (req, res) => {
 
 
 const getClients = (req, res) => {
-  SalesModel.getSales((err, sales) => {
+  ClientModel.getClients((err, sales) => {
     if (err) return response.serverError(res);
     return response.ok(res, sales);
   })
@@ -29,6 +29,6 @@ const getClients = (req, res) => {
 
 module.exports = {
   storeClient,
-  getClient
+  getClients
 }
 
