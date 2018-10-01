@@ -25,7 +25,6 @@ const storeSale = (req, res) => {
 
 
 const getSales = (req, res) => {
-  console.log("hola mund")
   SalesModel.getSales((err, sales) => {
     if (err){
       console.log(err)

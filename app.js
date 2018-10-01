@@ -3,6 +3,10 @@ const bodyParser = require('body-parser')
 const app = express()
 const passport = require("passport");
 const mongoose = require('mongoose');
+var cors = require('cors')
+
+
+app.use(cors())
 
 const db = require('./config/mongo/mongo')
 const url = 'mongodb://localhost:27017/neptuno_dev';

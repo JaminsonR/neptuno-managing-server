@@ -20,9 +20,9 @@ const storeClient = (req, res) => {
 
 
 const getClients = (req, res) => {
-  ClientModel.getClients((err, sales) => {
+  ClientModel.getClients((err, clients) => {
     if (err) return response.serverError(res);
-    return response.ok(res, sales);
+    return response.ok(res, clients);
   })
 }
 
