@@ -12,6 +12,8 @@ const storeSale = (req, res) => {
     subtotal       : req.body.subtotal,
     tax            : req.body.tax,
     total          : req.body.total,
+    status         : req.body.status,
+    due_date       : req.body.due_date
   });
   sale.storeSale((err) => {
     if (err){
@@ -30,7 +32,42 @@ const getSales = (req, res) => {
       console.log(err)
       return response.serverError(res);
     } 
-    return response.ok(res, sales);
+    let format_sales = []
+
+    for (let sale of sales){
+      let format_sale = {
+        _id : sale._id,
+        client_id : sale.client_id,
+        date : sale.date,
+        client_name : sale.client_name,
+        client_phone : sale.client_phone,
+        client_address : sale.client_address,
+        status: sale.status
+        due_date: sale.due_date
+        items : [],
+        subtotal : "",
+        tax : "",
+        total : ""
+      }
+      format_sale.tax = Number(sale.tax)
+      format_sale.subtotal = Number(sale.subtotal)
+      format_sale.total = Number(sale.total)
+      for (let item of sale.items){
+        format_item = {}
+        format_item.price = Number(item.price)
+        format_item.amount = Number(item.amount)
+        format_item.quantity = Number(item.quantity)
+        format_item.product_id = item.product_id
+        format_item.product_name = item.product_name
+
+        format_sale.items.push(format_item)
+      }
+
+      format_sales.push(format_sale)
+    }
+
+
+    return response.ok(res, format_sales);
   })
 }
 

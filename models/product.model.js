@@ -7,7 +7,8 @@ mongoose.Promise = global.Promise;
 const ProductSchema = new Schema({
   id  :  { type: String, required: true },
   name  :  { type: String, required: true },
-  price  :  { type: mongoose.Schema.Types.Decimal, required: true }
+  taxable : {type: Boolean, required: true},
+  price  :  { type: mongoose.Schema.Types.Decimal128, required: true }
 }, { collection : 'products' });
 
 ProductSchema.methods.storeProduct = function(callback) {

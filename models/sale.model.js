@@ -11,9 +11,10 @@ const SaleSchema = new Schema({
     client_phone  :  { type: String, required: true },
     client_address  :  { type: String, required: true },
     items  : [],
-    subtotal  : { type: mongoose.Schema.Types.Decimal, required: true },
-    tax  : { type: mongoose.Schema.Types.Decimal, required: true },
-    total  : { type: mongoose.Schema.Types.Decimal, required: true }
+    subtotal  : { type: mongoose.Schema.Types.Decimal128, required: true },
+    tax  : { type: mongoose.Schema.Types.Decimal128, required: true },
+    total  : { type: mongoose.Schema.Types.Decimal128, required: true,
+    status : {type: Number, required: true} }
     }, { collection : 'sales' });
 
 
@@ -22,7 +23,14 @@ SaleSchema.methods.storeSale = function(callback) {
 }
 
 SaleSchema.statics.getSales = function(callback) {
-  this.find({},callback);
+  this.find({},null,
+    {
+        sort:
+        {
+            date: -1 //Sort by Date Added DESC
+        }
+    },
+    callback);
 }
 
 const SaleModel = mongoose.model('SaleModel', SaleSchema);
