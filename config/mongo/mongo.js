@@ -7,6 +7,9 @@ var db
 module.exports = {
 	connect : (url) => {
 		return new Promise( function( resolve ){ 
+			let options = {}
+		    if (process.env.NODE_ENV === 'production')
+		      options = { autoIndex: false }
 			let options = {useNewUrlParser: true}
 			conn = mongoose.connect(url, options)
 			db = mongoose.connection
