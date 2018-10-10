@@ -13,8 +13,10 @@ const SaleSchema = new Schema({
     items  : [],
     subtotal  : { type: mongoose.Schema.Types.Decimal128, required: true },
     tax  : { type: mongoose.Schema.Types.Decimal128, required: true },
-    total  : { type: mongoose.Schema.Types.Decimal128, required: true,
-    status : {type: Number, required: true} }
+    total  : { type: mongoose.Schema.Types.Decimal128, required: true},
+    status : {type: Number, required: true},
+    due_date :   { type: Date, required: true }
+
     }, { collection : 'sales' });
 
 
