@@ -1,5 +1,5 @@
 const UserModel = require('../models/user');
-const jwt = require('../jwt');
+//const jwt = require('../jwt');
 /*
 module.exports = {
  login : (usr) => {
