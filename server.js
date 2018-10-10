@@ -36,6 +36,7 @@ function onListening() {
   }
 }
 
-server.on('error', onError)
+/*server.on('error', onError)
 server.on('listening', onListening)
-server.listen(app.get('port'))
+server.listen(app.get('port'))*/
+app.listen(process.env.PORT || 8080);
