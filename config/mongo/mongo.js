@@ -10,7 +10,7 @@ module.exports = {
 			let options = {}
 		    if (process.env.NODE_ENV === 'production')
 		      options = { autoIndex: false }
-			let options = {useNewUrlParser: true}
+			//let options = {useNewUrlParser: true}
 			conn = mongoose.connect(url, options)
 			db = mongoose.connection
 
