@@ -4,7 +4,6 @@ process.on('uncaughtException', function(err) {
 })
 
 const { neptuno } = require('./app')
-let { server, app } = neptuno()
 function onError(error) {
   if (error.syscall !== 'listen') {
     throw error
