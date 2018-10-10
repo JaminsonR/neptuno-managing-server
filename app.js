@@ -21,7 +21,6 @@ const User = require('./models/user');
 
 app.use(passport.initialize());
 
-const jwt = require('./jwt');
 
 
 const api = express()

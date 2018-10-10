@@ -3,7 +3,7 @@ var LoginController = require('../controllers/login.controller')
 const mongo = require('../config/mongo/mongo')
 let db = mongo.getDBConnection()
 const UserModel = require('../models/user');
-const jwt = require('../jwt');
+
 
 router.
 route('/login')
@@ -37,10 +37,10 @@ route('/login')
 		           	let user = usr.toJSON()
 		            sOptions.subject = user['email']
 		            sOptions.audience = user['id']
-		            console.log(jwt.sign(user,sOptions))
+
 		            return res.status(200).json({
 		                status: 'success',
-		                data: jwt.sign(user,sOptions)
+		                data: ""
 		            }).end()
 		        }
 	        }
