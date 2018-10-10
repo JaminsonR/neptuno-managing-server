@@ -84,10 +84,4 @@ app.get('/api/user/login', (req, res) => {
     });
 })
 
-
-
-module.exports = {
-  app,
-  server
-}
-//app.listen(process.env.PORT || 8080, () => console.log('Neptuno server running on port 3000!'))
+app.listen(process.env.PORT || 8080, () => console.log('Neptuno server running on port 3000!'))
