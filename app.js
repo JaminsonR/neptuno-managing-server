@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const app = express()
 const passport = require("passport");
 const mongoose = require('mongoose');
+const server = require('http').Server(app)
 var cors = require('cors')
 
 
