@@ -9,7 +9,8 @@ var cors = require('cors')
 app.use(cors())
 
 const db = require('./config/mongo/mongo')
-const url = 'mongodb://localhost:27017/neptuno_dev';
+//const url = 'mongodb://localhost:27017/neptuno_dev';
+const url = ''
 if (process.env.NODE_ENV === 'production') 
 const url = 'mongodb://neptuno:NeptunoV1@ds227373.mlab.com:27373/heroku_kt0nnhwm'
 app.use(bodyParser.json())
