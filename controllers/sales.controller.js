@@ -42,8 +42,8 @@ const getSales = (req, res) => {
         client_name : sale.client_name,
         client_phone : sale.client_phone,
         client_address : sale.client_address,
-        status: sale.status
-        due_date: sale.due_date
+        status: sale.status,
+        due_date: sale.due_date,
         items : [],
         subtotal : "",
         tax : "",
