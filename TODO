@@ -1,0 +1,5 @@
+[ ] mover las rutas creadas del archivo app.js
+[ ] mover carpeta app_api
+[ ] hacer testeable los controllers y routers
+[ ] testing folder app probar con login primero
+[ ] db dump crear para pruebas con front

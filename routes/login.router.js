@@ -1,7 +1,5 @@
 var router = require('express').Router()
 var LoginController = require('../controllers/login.controller')
-const mongo = require('../config/mongo/mongo')
-let db = mongo.getDBConnection()
 const UserModel = require('../models/user');
 
 

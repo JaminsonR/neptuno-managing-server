@@ -73,3 +73,6 @@ typings/
 .serverless
 
 /jwt
+
+package-lock.js
+yarn.lock
