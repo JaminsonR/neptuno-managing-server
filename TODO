@@ -3,3 +3,36 @@
 [ ] hacer testeable los controllers y routers
 [ ] testing folder app probar con login primero
 [ ] db dump crear para pruebas con front
+[ ] eslint config
+[ ] ver codigo de mejorar legibilidad y configuracion de archivos que de menos trabajo
+[ ] ver otros proyectos codigo legible
+
+[ ] login jwt total mente
+[ ] nivel de permisos
+
+[ ] ventas tiene estados sale.model estados ''
+  tipos de
+  gerentes => ingreso de productos de inventario
+  administradores
+  usuarios
+
+[ ] inventario de productos, no todos los productos gravan iva
+	* poder registar el ingreso y el egreso de la materia prima. Distincion entre materia prima y elaborados
+	* balance de las cosas que compra y los ingresos de las ventas
+	* cada producto
+
+[ ] llevar la cantidad de las ventas por cobrar, para llevar el track cuanto va pagando
+
+controlar el tiempo que esta en la pagina cada usuario
+cada usuario tiene que tener el perfil que se puede actualizar
+
+[ ] resumen de ventas por dia, en total. Graficas por mes de ventas y en que cosas
+[ ] ventas cosas
+
+[ ] por cada venta el inventario se actualizar
+
+[ ] gastos de cosas
+
+
+[ ] documentacion
+[ ] 

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 mongoose.promise = global.Promise
 mongoose.set('useCreateIndex', true)
+const { isTesting } = require('./index')
 
 var conn
 var db
@@ -18,7 +19,9 @@ module.exports = {
 			})
 
 			db.on('connected', function () {
-				console.log(`app connected to ${url}`)
+        if (!isTesting) {
+          console.log(`app connected to ${url}`)
+        }
 			})
 
 			db.on('disconnected', function () {
@@ -44,7 +47,12 @@ module.exports = {
 	},
 	disconnect: () => {
 		mongoose.connection.close()
-	}
+	},
+  clean () {
+    return new Promise(function (resolve) {
+      resolve(mongoose.connection.dropDatabase())
+    })
+  }
 }
 
 

@@ -17,9 +17,9 @@ ClientSchema.methods.storeClient = function(callback) {
 }
 
 ClientSchema.statics.getClients = function(callback) {
-  this.find({},callback);
+  this.find({},callback)
 }
 
-const ClientModel = mongoose.model('ClientModel', ClientSchema);
+const ClientModel = mongoose.model('ClientModel', ClientSchema)
  
-module.exports = ClientModel;
+module.exports = ClientModel

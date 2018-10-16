@@ -12,7 +12,9 @@ module.exports = {
     }
   },
   PORT: process.env.PORT || 3000,
-  isDevelop: process.NODE_ENV === 'development',
-  isProduction: process.NODE_ENV === 'production',
-  isTesting: process.NODE_ENV === 'testing'
+  isDevelop: process.env.NODE_ENV === 'development',
+  isProduction: process.env.NODE_ENV === 'production',
+  isTesting: process.env.NODE_ENV === 'testing',
+  SECRET: process.env.SECRET || 'secreta',
+  EXPIRE: process.env.EXPIRE || 86400
 }

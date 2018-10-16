@@ -1,24 +1,38 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose')
  
-// create a schema
-const userSchema = new Schema({
+const UserSchema = mongoose.Schema({
   id: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   first_name: { type: String },
   middle_name: { type: String },
   family_name: { type: String },
-  last_name: { type: String }
-}, { collection : 'users' });
- 
-userSchema.statics.getUser = function(id_user, callback) {
-  this.findOne({id: id_user}).exec(function(err, users) 
-  	{ 
-  		callback(err, users) 
-  	})
+  last_name: { type: String },
+  // type: { 
+  //   type: String,
+  //   default: 'usuario',
+  //   enum: ['gerente', 'administrador', 'usuario'] 
+  // }
+}, { collection : 'users' })
+
+UserSchema.methods = {
+  create () {
+    let self = this
+    return Promise.resolve(self.save())
+  }
 }
 
+UserSchema.statics = {
+  getUser(id_user, callback) {
+    this.findOne({id: id_user}).exec(function(err, users) {
+      callback(err, users) 
+    })
+  },
+  login (id, password) {
+    const self = this
+    return new Promise(function (resolve) {
+      resolve(self.findOne({ $and: [{ id }, { password }] }))
+    })
+  }
+}
 
-const UserModel = mongoose.model('UserModel', userSchema);
- 
-module.exports = UserModel;
+module.exports = mongoose.model('UserModel', UserSchema)

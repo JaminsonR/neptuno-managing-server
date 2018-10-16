@@ -1,3 +1,4 @@
+const { isTesting } = require('./config')
 process.on('uncaughtException', (err) => {
   console.error('Caught exception: ' + err)
   console.error(err.stack)
@@ -8,6 +9,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const compression = require('compression')
+const morgan = require('morgan')
 const passport = require('passport')
 // const mongoose = require('mongoose') // FIX delete
 
@@ -17,8 +19,12 @@ app.use(cors())
 app.use(compression())
 app.use(passport.initialize())
 
+if (!isTesting) {
+  app.use(morgan('tiny'))
+}
+
 const api = express()
-require('./app_api/routes.api')(api)
+require('./routes')(api)
 app.use('/api', api)
 
 // FIX this....
