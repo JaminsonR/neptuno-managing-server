@@ -14,6 +14,10 @@ npm install
 ```
 
 ```sh
+npm run db:init
+```
+
+```sh
 npm run dev
 ```
 
