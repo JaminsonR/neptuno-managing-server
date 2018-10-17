@@ -19,10 +19,22 @@ test.after('cleanup', async t => {
   db.disconnect()
 })
 
-test('login', async t => {
+test('login ok', async t => {
   let [user] = users
   let userObj = new UsersModel(user)
   await userObj.create()
   let res = await request(app).post(`/api/login/auth`).send({ id: user['id'], password: user['password'] })
-  t.is(true, true)
+  t.is(res.body.state, true)
+  t.is(res.body.stateCode, 200)
+  t.is(typeof res.body.data, 'string')
+})
+
+test('login fail', async t => {
+  let [user] = users
+  let userObj = new UsersModel(user)
+  await userObj.create()
+  let res = await request(app).post(`/api/login/auth`).send({ id: '023', password: '123' })
+  t.is(res.body.state, false)
+  t.is(res.body.stateCode, 200)
+  t.is(res.body.data, 'El usuario no existe')
 })

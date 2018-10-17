@@ -1,7 +1,11 @@
-var router = require('express').Router()
-var SalesController = require('../controllers/sales.controller')
+const router = require('express').Router()
+const SalesController = require('../controllers/sales.controller')
+const { jwt } = require('../utils/middlewares')
 
+// create
 router.post('/', SalesController.storeSale)
-router.get('/', SalesController.getSales)
+
+// get all
+router.get('/', jwt, SalesController.getSales)
 
 module.exports = router

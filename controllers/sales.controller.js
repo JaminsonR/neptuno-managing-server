@@ -1,5 +1,5 @@
 const SalesModel = require('../models/sale.model')
-var response = require('../utils/responses')
+const response = require('../utils/responses')
 
 const storeSale = (req, res) => {
   let sale = new SalesModel({
