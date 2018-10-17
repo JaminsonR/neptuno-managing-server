@@ -23,7 +23,16 @@ npm run dev
 
 ### Testing
 
+Testing by module. Example
+
 ```sh
+npm run test:utils
+```
+
+Run all test
+
+```sh
+npm run test
 ```
 
 ### Production

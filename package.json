@@ -6,8 +6,12 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development env-cmd .env nodemon server.js --config nodemon.json",
     "test:utils": "cross-env NODE_ENV=testing env-cmd .env ava utils/utils.test.js",
+    "test:login": "cross-env NODE_ENV=testing env-cmd .env ava test/login.test.js",
+    "test:clients": "cross-env NODE_ENV=testing env-cmd .env ava test/clients.test.js",
+    "test:sales": "cross-env NODE_ENV=testing env-cmd .env ava test/sales.test.js",
+    "test:products": "cross-env NODE_ENV=testing env-cmd .env ava test/products.test.js",
     "db:init": "cross-env NODE_ENV=development env-cmd .env node scripts/dbinit.js",
-    "test": "ava"
+    "test": "npm-run-all test:utils test:login test:clients test:sales test:products"
   },
   "repository": {
     "type": "git",
@@ -46,10 +50,17 @@
     "chai": "^4.2.0",
     "cross-env": "^5.2.0",
     "env-cmd": "^8.0.2",
+    "eslint": "^5.7.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
     "jwt-decode": "^2.2.0",
     "mocha": "^5.2.0",
     "mocha-sinon": "^2.1.0",
     "nodemon": "^1.18.4",
+    "npm-run-all": "^4.1.3",
     "sinon": "^6.3.5",
     "supertest": "^3.3.0"
   }

@@ -1,18 +1,18 @@
 const mongoose = require('mongoose')
- 
+
 const UserSchema = mongoose.Schema({
   id: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   first_name: { type: String },
   middle_name: { type: String },
   family_name: { type: String },
-  last_name: { type: String },
-  // type: { 
+  last_name: { type: String }
+  // type: {
   //   type: String,
   //   default: 'usuario',
-  //   enum: ['gerente', 'administrador', 'usuario'] 
+  //   enum: ['gerente', 'administrador', 'usuario']
   // }
-}, { collection : 'users' })
+}, { collection: 'users' })
 
 UserSchema.methods = {
   create () {
@@ -22,9 +22,9 @@ UserSchema.methods = {
 }
 
 UserSchema.statics = {
-  getUser(id_user, callback) {
-    this.findOne({id: id_user}).exec(function(err, users) {
-      callback(err, users) 
+  getUser (usedId, callback) {
+    this.findOne({ id: usedId }).exec(function (err, users) {
+      callback(err, users)
     })
   },
   login (id, password) {

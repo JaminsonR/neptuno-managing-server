@@ -1,24 +1,20 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
- 
-mongoose.Promise = global.Promise;
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+mongoose.Promise = global.Promise
 
-// create a schema
 const ProductSchema = new Schema({
-  id  :  { type: String, required: true },
-  name  :  { type: String, required: true },
-  taxable : {type: Boolean, required: true}, // con iva o no
-  price  :  { type: mongoose.Schema.Types.Decimal128, required: true }
-}, { collection : 'products' });
+  id: { type: String, required: true },
+  name: { type: String, required: true },
+  taxable: { type: Boolean, required: true }, // con iva o no
+  price: { type: mongoose.Schema.Types.Decimal128, required: true }
+}, { collection: 'products' })
 
-ProductSchema.methods.storeProduct = function(callback) {
+ProductSchema.methods.storeProduct = function (callback) {
   this.save(callback)
 }
 
-ProductSchema.statics.getProducts = function(callback) {
-  this.find({},callback);
+ProductSchema.statics.getProducts = function (callback) {
+  this.find({}, callback)
 }
 
-const ProductModel = mongoose.model('ProductModel', ProductSchema);
- 
-module.exports = ProductModel;
+module.exports = mongoose.model('ProductModel', ProductSchema)

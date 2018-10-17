@@ -2,54 +2,54 @@ function serverError (res) {
   return res.status(500).json({
     status: false,
     errorCodigo: 500,
-    errorMensaje: "Servidor error"
+    errorMensaje: 'Servidor error'
   })
 }
 
 function ok (res, data) {
-  return res.status(200).json({status: true, data: data});
+  return res.status(200).json({ status: true, data: data })
 }
 
-const ERROR_SERVIDOR = { datos: { mensaje_error: 'Error en el servidor' }, codigoEstado: 500, estado: false }
+const SERVER_ERROR = { data: 'Server Error', stateCode: 500, state: false }
 
-const NO_AUTORIZADO = { datos: { mensaje_error: 'No autorizado' }, codigoEstado: 401, estado: false }
+const UNAUTHORIZED = { data: 'Unauthorized', stateCode: 401, state: false }
 
-const NO_ENVIO_JWT = { datos: { mensaje_error: 'No envio el jwt en el Bearer' }, codigoEstado: 401, estado: false }
+const NOT_JWT = { data: 'Didnt send jwt in the Bearer', stateCode: 401, state: false }
 
-const OK = (datos) => {
-  const resp = { estado: true, datos, codigoEstado: 200 }
+const OK = (data) => {
+  const resp = { state: true, data, stateCode: 200 }
   return resp
 }
 
-const CREADO = (datos) => {
-  const resp = { estado: true, datos, codigoEstado: 201 }
+const CREATED = (data) => {
+  const resp = { state: true, data, stateCode: 201 }
   return resp
 }
 
-const NO_OK = (mensaje) => {
+const NOT_OK = (data) => {
   return {
-    estado: false,
-    mensaje,
-    codigoEstado: 200
+    state: false,
+    data,
+    stateCode: 200
   }
 }
 
-const REGISTRO_NO_ENCONTRADO = (mensaje) => {
+const NOT_FOUND = (data) => {
   return {
-    estado: false,
-    mensaje,
-    codigoEstado: 404
+    state: false,
+    data,
+    stateCode: 404
   }
 }
 
 module.exports = {
   serverError,
   ok,
-  ERROR_SERVIDOR,
-  NO_AUTORIZADO,
+  SERVER_ERROR,
+  UNAUTHORIZED,
   OK,
-  NO_OK,
-  CREADO,
-  NO_ENVIO_JWT,
-  REGISTRO_NO_ENCONTRADO
+  NOT_OK,
+  CREATED,
+  NOT_JWT,
+  NOT_FOUND
 }

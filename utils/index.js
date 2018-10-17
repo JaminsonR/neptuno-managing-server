@@ -1,16 +1,24 @@
 const jwt = require('jsonwebtoken')
 const { SECRET, EXPIRE } = require('../config')
 module.exports = {
-  verificarToken (token) {
+  /*
+  // Verify Token
+  */
+  tokenVerify (token) {
     try {
       let decoded = jwt.verify(token, SECRET)
       return decoded
-    } catch(err) {
+    } catch (err) {
       return null
     }
   },
-  generarToken (datosEnToken) {
-    let token = jwt.sign({ ...datosEnToken }, SECRET, { expiresIn: EXPIRE })
+  /*
+  * generate token
+  * @param {string} dataInsideToken - Data send to token.
+  * @returns {string} token.
+  */
+  tokenGenerate (dataInsideToken) {
+    let token = jwt.sign({ ...dataInsideToken }, SECRET, { expiresIn: EXPIRE })
     return token
   }
 }

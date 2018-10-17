@@ -1,19 +1,21 @@
 const UserModel = require('../models/user')
 const responses = require('../utils/responses')
-const { generarToken } = require('../utils')
+
+const { tokenGenerate } = require('../utils')
+
 module.exports = {
   async login (id, password) {
     try {
-      let usuario = await UserModel.login(id, password)
-      if (!usuario) {
-        return responses.NO_OK('El usuario no existe') 
+      let user = await UserModel.login(id, password)
+      if (!user) {
+        return responses.NOT_OK('El usuario no existe')
       } else {
-        let token = generarToken(usuario)
+        let token = tokenGenerate(user)
         return responses.OK(token)
       }
     } catch (err) {
       console.error(err)
-      return responses.NO_OK('Login error') 
+      return responses.NOT_OK('Login error')
     }
   }
 }

@@ -1,5 +1,3 @@
-[ ] mover las rutas creadas del archivo app.js
-[ ] mover carpeta app_api
 [ ] hacer testeable los controllers y routers
 [ ] testing folder app probar con login primero
 [ ] db dump crear para pruebas con front
@@ -7,15 +5,16 @@
 [ ] ver codigo de mejorar legibilidad y configuracion de archivos que de menos trabajo
 [ ] ver otros proyectos codigo legible
 
-[ ] login jwt total mente
+[ ] login jwt totalmente
+[ ] protejer rutas api con jwt, anadir el token al header del cliente
+[ ] testear las rutas ya hechas
+[ ] tipos de gerentes => ingreso de productos de inventario, administradores, usuarios
 [ ] nivel de permisos
+[ ] proteccion de rutas api
+[ ] db init mejorado
+
 
 [ ] ventas tiene estados sale.model estados ''
-  tipos de
-  gerentes => ingreso de productos de inventario
-  administradores
-  usuarios
-
 [ ] inventario de productos, no todos los productos gravan iva
 	* poder registar el ingreso y el egreso de la materia prima. Distincion entre materia prima y elaborados
 	* balance de las cosas que compra y los ingresos de las ventas

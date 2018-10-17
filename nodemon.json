@@ -9,8 +9,12 @@
       "restart": ""
     },
     "watch": [
-      "app.js"
+      "app.js",
+      "controllers/**",
+      "models/**",
+      "utils/**",
+      "routes/**",
+      "config/**"
     ],
     "ext": "js json"
   }
-  
