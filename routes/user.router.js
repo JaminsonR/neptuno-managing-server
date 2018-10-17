@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const { jwt } = require('../utils/middlewares')
 // const LoginController = require('../controllers/user.controller')
 
 // get all
