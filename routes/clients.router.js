@@ -1,11 +1,27 @@
-var router = require('express').Router()
+const express = require('express')
+const app = express()
 var ClientController = require('../controllers/clients.controller')
-const { jwt } = require('../utils/middlewares')
+
+// middleware code
+const { jwt, middlewareTesting } = require('../utils/middlewares')
+const { isTesting } = require('../config')
+const jwtMiddleware = middlewareTesting(isTesting, jwt)
+app.route('*').all(jwtMiddleware)
 
 // create
-router.post('/', jwt, ClientController.storeClient)
+app
+  .route('/')
+  .post(async (req, res) => {
+    let resp = await ClientController.create(req.body)
+    return res.status(resp.stateCode).send(resp)
+  })
 
 // get all
-router.get('/', jwt, ClientController.getClients)
+app
+  .route('/')
+  .get(async (req, res) => {
+    let resp = await ClientController.getAll()
+    return res.status(resp.stateCode).send(resp)
+  })
 
-module.exports = router
+module.exports = app

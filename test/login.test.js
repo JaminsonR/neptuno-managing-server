@@ -4,7 +4,7 @@ import request from 'supertest'
 import db from '../config/db'
 import { URL_DB } from '../config'
 import users from './mocks/users'
-import UsersModel from '../models/user'
+import UsersModel from '../models/user.model'
 
 test.before(async t => {
   await db.connect(URL_DB())

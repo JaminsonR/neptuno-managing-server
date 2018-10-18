@@ -1,11 +1,13 @@
 const router = require('express').Router()
 const SalesController = require('../controllers/sales.controller')
-const { jwt } = require('../utils/middlewares')
+const { jwt, middlewareTesting } = require('../utils/middlewares')
+const { isTesting } = require('../config')
+const jwtMiddleware = middlewareTesting(isTesting, jwt)
 
 // create
-router.post('/', jwt, SalesController.storeSale)
+router.post('/', jwtMiddleware, SalesController.storeSale)
 
 // get all
-router.get('/', jwt, SalesController.getSales)
+router.get('/', jwtMiddleware, SalesController.getSales)
 
 module.exports = router

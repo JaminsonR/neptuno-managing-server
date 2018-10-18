@@ -9,12 +9,23 @@ const ClientSchema = new Schema({
   client_address: { type: String, required: true }
 }, { collection: 'clients' })
 
-ClientSchema.methods.storeClient = function (callback) {
-  this.save(callback)
+ClientSchema.methods = {
+  create () {
+    return this.save().then((doc) => {
+      return Promise.resolve(doc)
+    }).catch((err) => {
+      return Promise.reject(err)
+    })
+  }
 }
 
-ClientSchema.statics.getClients = function (callback) {
-  this.find({}, callback)
+ClientSchema.statics = {
+  getAll () {
+    return Promise.resolve(this.find({ }).exec())
+  },
+  get (id, select = '-_id') {
+    return Promise.resolve(this.findOne({ id }).lean().select(select).exec())
+  }
 }
 
 module.exports = mongoose.model('ClientModel', ClientSchema)

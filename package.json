@@ -1,13 +1,14 @@
 {
   "name": "neptuno-managing-server",
   "version": "1.0.0",
-  "description": "Nepturno managing rest api",
+  "description": "Neptuno managing rest api",
   "main": "server.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development env-cmd .env nodemon server.js --config nodemon.json",
     "test:utils": "cross-env NODE_ENV=testing env-cmd .env ava utils/utils.test.js",
     "test:login": "cross-env NODE_ENV=testing env-cmd .env ava test/login.test.js",
     "test:clients": "cross-env NODE_ENV=testing env-cmd .env ava test/clients.test.js",
+    "test:users": "cross-env NODE_ENV=testing env-cmd .env ava test/users.test.js",
     "test:sales": "cross-env NODE_ENV=testing env-cmd .env ava test/sales.test.js",
     "test:products": "cross-env NODE_ENV=testing env-cmd .env ava test/products.test.js",
     "db:init": "cross-env NODE_ENV=development env-cmd .env node scripts/dbinit.js",

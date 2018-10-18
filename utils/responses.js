@@ -14,7 +14,11 @@ const SERVER_ERROR = { data: 'Server Error', stateCode: 500, state: false }
 
 const UNAUTHORIZED = { data: 'Unauthorized', stateCode: 401, state: false }
 
-const NOT_JWT = { data: 'Didnt send jwt in the Bearer', stateCode: 401, state: false }
+const NOT_JWT = { data: 'Did not send jwt in the Bearer', stateCode: 401, state: false }
+
+const NOT_AUTH = { data: 'Did not send authorization', stateCode: 401, state: false }
+
+const NOT_BEARER = { data: 'Did not send Bearer keyword', stateCode: 401, state: false }
 
 const OK = (data) => {
   const resp = { state: true, data, stateCode: 200 }
@@ -51,5 +55,7 @@ module.exports = {
   NOT_OK,
   CREATED,
   NOT_JWT,
-  NOT_FOUND
+  NOT_FOUND,
+  NOT_AUTH,
+  NOT_BEARER
 }

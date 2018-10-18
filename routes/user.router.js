@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
-const { jwt } = require('../utils/middlewares')
+const { jwt, middlewareTesting } = require('../utils/middlewares')
+const { isTesting } = require('../config')
+const jwtMiddleware = middlewareTesting(isTesting, jwt)
 // const LoginController = require('../controllers/user.controller')
 
 // get all
