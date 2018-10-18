@@ -13,7 +13,7 @@ const SaleSchema = new Schema({
   subtotal: { type: mongoose.Schema.Types.Decimal128, required: true },
   tax: { type: mongoose.Schema.Types.Decimal128, required: true },
   total: { type: mongoose.Schema.Types.Decimal128, required: true },
-  status: { type: Number, required: true }, // 'por cobrar', 'cobrada', 'vencida'
+  status: { type: String, required: true }, // 'por cobrar', 'cobrada', 'vencida'
   due_date: { type: Date, required: true }
 }, { collection: 'sales' })
 
