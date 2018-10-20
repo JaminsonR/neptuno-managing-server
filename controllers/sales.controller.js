@@ -23,7 +23,27 @@ const storeSale = (req, res) => {
     return response.ok(res, sale)
   })
 }
+const getSalesPerMonth = (req, res) => {
+  SalesModel.getSalesPerMonth((err, sales) => {
+    if (err) {
+      console.log(err)
+      return response.serverError(res)
+    }
 
+    let formatSales = []
+
+    for (let sale of sales) {
+      let formatSale = {
+        date: sale.date,
+        total: ''
+      }
+      formatSale.total = Number(sale.total)
+      formatSales.push(formatSale)
+    }
+    console.log(formatSales)
+    return response.ok(res, formatSales)
+  })
+}
 const getSales = (req, res) => {
   SalesModel.getSales((err, sales) => {
     if (err) {
@@ -67,5 +87,6 @@ const getSales = (req, res) => {
 
 module.exports = {
   storeSale,
-  getSales
+  getSales,
+  getSalesPerMonth
 }

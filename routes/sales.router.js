@@ -10,4 +10,6 @@ router.post('/', jwtMiddleware, SalesController.storeSale)
 // get all
 router.get('/', jwtMiddleware, SalesController.getSales)
 
+router.get('/months', jwtMiddleware, SalesController.getSalesPerMonth)
+
 module.exports = router

@@ -30,5 +30,19 @@ SaleSchema.statics.getSales = function (callback) {
     },
     callback)
 }
+SaleSchema.statics.getSalesPerMonth = function (callback) {
+  this.aggregate([
+    { $group:
+      {
+        _id: { $month: '$date' },
+        total: { $sum: '$total' },
+        count: { $sum: 1 }
+      } }, {
+      $project: { date: '$_id', total: '$total' }
+    }
+
+  ]
+  ).exec(callback)
+}
 
 module.exports = mongoose.model('SaleModel', SaleSchema)
