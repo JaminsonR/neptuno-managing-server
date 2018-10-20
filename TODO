@@ -8,15 +8,16 @@
 [x ] login jwt totalmente
 [x] protejer rutas api con jwt, anadir el token al header del cliente
 [x] testear las rutas ya hechas
-
+this.findOne(criteria, projection, options).populate(populate).exec()
 20 ya tener todo de 
 [ ] landing page
 [ ] inventario api, front
 	agregar inventario
-	lista de productos, link con ventas para hacer el egreso de los productos eliminar de existencia. Ingresar razon de disminucion de los productos
-	eliminacion de productos manualmente
-	inventario de productos, no todos los productos gravan iva
-	* poder registar el ingreso y el egreso de la materia prima. Distincion entre materia prima y elaborados
+	ver todos inventarios
+	- por cada venta que se realiza, eliminar de existencia los productos
+	- lista de productos, link con ventas para hacer el egreso de los productos eliminar de existencia.
+	- inventario de productos, no todos los productos gravan iva
+	- poder registar el ingreso y el egreso de la materia prima. Distincion entre materia prima y elaborados
 	
 
 [ ] dashobard, pagina que muestra los resumenes de Ventas, Deudas, Cuentas por cobrar, Inventario
@@ -30,6 +31,7 @@
 
 inventario
 * balance de las cosas que compra y los ingresos de las ventas de cada producto
+* Ingresar razon de disminucion de los productos eliminacion de productos manualmente
 
 controlar el tiempo que esta en la pagina cada usuario
 cada usuario tiene que tener el perfil que se puede actualizar

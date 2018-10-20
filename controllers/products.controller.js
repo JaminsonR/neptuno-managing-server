@@ -1,40 +1,20 @@
 const ProductModel = require('../models/product.model')
-var response = require('../utils/responses')
-
-const storeProduct = (req, res) => {
-  // let Product = new ProductModel({
-  //   id      : req.body.id,
-  //   name    : req.body.name,
-  //   price   : req.body.price,
-  //   taxable : req.body.taxable
-  // });
-  // sale.storeProduct((err) => {
-  //   if (err){
-  //     console.log(err)
-  //     return response.serverError(res);
-  //   }
-  //   return response.ok(res, sale);
-  // });
-}
-
-const getProducts = (req, res) => {
-  ProductModel.getProducts((err, Products) => {
-    if (err) return response.serverError(res)
-    let formatProducts = []
-    for (let product of Products) {
-      let productTmp = {}
-      productTmp._id = product._id
-      productTmp.name = product.name
-      productTmp.price = Number(product.price)
-      productTmp.id = product.id
-      productTmp.taxable = product.taxable
-      formatProducts.push(productTmp)
-    }
-    return response.ok(res, formatProducts)
-  })
-}
+var responses = require('../utils/responses')
 
 module.exports = {
-  storeProduct,
-  getProducts
+  async getAll () {
+    try {
+      const products = await ProductModel.getAll()
+      return responses.OK(products)
+    } catch (error) {
+      console.log(error)
+      return responses.SERVER_ERROR
+    }
+  },
+  async create ({ id, name, taxable, price, stock, isPrime }) {
+    let product = arguments[0]
+    let productObj = new ProductModel(product)
+    let created = await productObj.create()
+    return responses.OK(created)
+  }
 }
