@@ -40,3 +40,15 @@ test.serial('create', async t => {
   let created = await ProductModel.get(id)
   testProperty(product, created, t)
 })
+
+test.serial('create:unique', async t => {
+  let [product] = products
+  let productObj = new ProductModel(product)
+  await productObj.create()
+  let res = await request(app).post(`/api/products`).send(product)
+  t.is(res.body.state, false)
+  t.is(res.body.stateCode, 404)
+  t.is(res.body.data.type, 'unique-error')
+  let created = await ProductModel.getAll()
+  t.is(created.length, 1)
+})

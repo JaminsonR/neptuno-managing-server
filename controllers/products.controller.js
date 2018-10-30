@@ -12,9 +12,17 @@ module.exports = {
     }
   },
   async create ({ id, name, taxable, price, stock, isPrime }) {
-    let product = arguments[0]
-    let productObj = new ProductModel(product)
-    let created = await productObj.create()
-    return responses.OK(created)
+    try {
+      let product = arguments[0]
+      let productObj = new ProductModel(product)
+      await ProductModel.init()
+      let created = await productObj.create()
+      return responses.OK(created)
+    } catch (error) {
+      if (error.type) {
+        return responses.CUSTOM_ERROR(error)
+      }
+      return responses.SERVER_ERROR
+    }
   }
 }

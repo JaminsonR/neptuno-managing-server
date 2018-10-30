@@ -1,30 +1,16 @@
 const mongoose = require('mongoose')
+const errors = require('../config/errors')
 const Schema = mongoose.Schema
 mongoose.Promise = global.Promise
 
 const ProductSchema = new Schema({
-  id: { type: String, required: true, unique: true },
+  id: { type: Schema.Types.String, required: true, unique: true },
   name: { type: String, required: true },
   taxable: { type: Boolean, required: true },
   price: { type: mongoose.Schema.Types.Decimal128, required: true },
   stock: { type: Number, default: 0 },
   isPrime: { type: Boolean, default: true }
 }, { collection: 'products' })
-
-// ProductSchema.set('toJSON', {
-//   getters: true,
-//   transform: (doc, ret) => {
-//     if (ret.price) {
-//       ret.price = Number(ret.price)
-//     }
-//     delete ret.__v
-//     return ret
-//   }
-// })
-
-// ProductSchema.virtual('price').get(function () {
-//   return Number(this.price)
-// })
 
 ProductSchema.options.toJSON = {
   transform: function (doc, ret) {
@@ -41,7 +27,7 @@ ProductSchema.methods = {
     return this.save().then((doc) => {
       return Promise.resolve(doc)
     }).catch((err) => {
-      return Promise.reject(err)
+      return Promise.reject(errors.ERROR_HANDLER(err))
     })
   }
 }

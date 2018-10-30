@@ -46,6 +46,14 @@ const NOT_FOUND = (data) => {
   }
 }
 
+const CUSTOM_ERROR = (data) => {
+  return {
+    state: false,
+    data,
+    stateCode: 404
+  }
+}
+
 module.exports = {
   serverError,
   ok,
@@ -57,5 +65,6 @@ module.exports = {
   NOT_JWT,
   NOT_FOUND,
   NOT_AUTH,
-  NOT_BEARER
+  NOT_BEARER,
+  CUSTOM_ERROR
 }

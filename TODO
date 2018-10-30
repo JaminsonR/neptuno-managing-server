@@ -1,3 +1,9 @@
+M# Moduloes
+- Users
+- Sales
+- Clients
+- Product
+
 [ ] hacer testeable los controllers y routers
 [ ] testing folder app probar con login primero
 [ ] db dump crear para pruebas con front
@@ -5,41 +11,37 @@
 [ ] ver codigo de mejorar legibilidad y configuracion de archivos que de menos trabajo
 [ ] ver otros proyectos codigo legible
 
-[x ] login jwt totalmente
-[x] protejer rutas api con jwt, anadir el token al header del cliente
-[x] testear las rutas ya hechas
 this.findOne(criteria, projection, options).populate(populate).exec()
 20 ya tener todo de 
-[ ] landing page
 [ ] inventario api, front
 	agregar inventario
 	ver todos inventarios
-	- por cada venta que se realiza, eliminar de existencia los productos
-	- lista de productos, link con ventas para hacer el egreso de los productos eliminar de existencia.
-	- inventario de productos, no todos los productos gravan iva
-	- poder registar el ingreso y el egreso de la materia prima. Distincion entre materia prima y elaborados
-	
+	[] por cada venta que se realiza, eliminar de existencia los productos
+	[] lista de productos, link con ventas para hacer el egreso de los productos eliminar de existencia.
+	[] inventario de productos, no todos los productos gravan iva
+	[] poder registar el ingreso y el egreso de la materia prima. Distincion entre materia prima y elaborados
+	[] balance de las cosas que compra y los ingresos de las ventas de cada producto
+    [] Ingresar razon de disminucion de los productos eliminacion de productos manualmente
 
-[ ] dashobard, pagina que muestra los resumenes de Ventas, Deudas, Cuentas por cobrar, Inventario
+[ ] landing page
 [ ] nivel de permisos
 [ ] tipos de gerentes => ingreso de productos de inventario, administradores, usuarios
 [ ] proteccion de rutas api
 [ ] db init mejorado
-
 [ ] ventas tiene estados sale.model estados ''
 [ ] llevar la cantidad de las ventas por cobrar, para llevar el track cuanto va pagando
 
-inventario
-* balance de las cosas que compra y los ingresos de las ventas de cada producto
-* Ingresar razon de disminucion de los productos eliminacion de productos manualmente
+[ ] dashobard, pagina que muestra los resumenes de Ventas, Deudas, Cuentas por cobrar, Inventario
 
-controlar el tiempo que esta en la pagina cada usuario
-cada usuario tiene que tener el perfil que se puede actualizar
+inventario
+
+
+[] controlar el tiempo que esta en la pagina cada usuario
+[] cada usuario tiene que tener el perfil que se puede actualizar
 
 [ ] resumen de ventas por dia, en total. Graficas por mes de ventas y en que cosas
 [ ] ventas cosas
 [ ] por cada venta el inventario se actualizar
 [ ] gastos de cosas
-
 [ ] documentacion
 [ ] - hacer un logger de todo
