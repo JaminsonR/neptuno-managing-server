@@ -30,4 +30,12 @@ app
     return res.status(resp.stateCode).send(resp)
   })
 
+// // get from month sales
+// app
+//   .route('/months/:month/:year')
+//   .get(async (req, res) => {
+//     let resp = await SalesController.getFromMonth(req.params)
+//     return res.status(resp.stateCode).send(resp)
+//   })
+
 module.exports = app

@@ -44,9 +44,19 @@ SaleSchema.statics = {
             _id: { $month: '$date' },
             total: { $sum: '$total' },
             count: { $sum: 1 }
-          }
-        },
-        { $project: { date: '$_id', total: '$total' } }
+          } }, {
+          $project: { date: '$_id', total: '$total' }
+        }
+      ]).exec((err, doc) => {
+        if (err) reject(err)
+        resolve(doc)
+      })
+    })
+  },
+  getFromMonth (year, month) {
+    return new Promise((resolve, reject) => {
+      this.aggregate([
+        { $match: { date: year + '-' + month } }
       ]).exec((err, doc) => {
         if (err) reject(err)
         resolve(doc)

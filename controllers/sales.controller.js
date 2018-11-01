@@ -1,41 +1,46 @@
 const SalesModel = require('../models/sale.model')
 const responses = require('../utils/responses')
 
+function formatSales (sales) {
+  let formatSales = []
+  for (let sale of sales) {
+    let formatSale = {
+      id: sale._id,
+      client_id: sale.client_id,
+      date: sale.date,
+      client_name: sale.client_name,
+      client_phone: sale.client_phone,
+      client_address: sale.client_address,
+      status: sale.status,
+      due_date: sale.due_date,
+      items: [],
+      subtotal: '',
+      tax: '',
+      total: ''
+    }
+    formatSale.tax = Number(sale.tax)
+    formatSale.subtotal = Number(sale.subtotal)
+    formatSale.total = Number(sale.total)
+    for (let item of sale.items) {
+      let formatItem = {}
+      formatItem.price = Number(item.price)
+      formatItem.amount = Number(item.amount)
+      formatItem.quantity = Number(item.quantity)
+      formatItem.product_id = item.product_id
+      formatItem.product_name = item.product_name
+      formatSale.items.push(formatItem)
+    }
+    formatSales.push(formatSale)
+  }
+  return (formatSales)
+}
+
 module.exports = {
   async getAll () {
     try {
       const sales = await SalesModel.getAll()
-      let formatSales = []
-      for (let sale of sales) {
-        let formatSale = {
-          id: sale._id,
-          client_id: sale.client_id,
-          date: sale.date,
-          client_name: sale.client_name,
-          client_phone: sale.client_phone,
-          client_address: sale.client_address,
-          status: sale.status,
-          due_date: sale.due_date,
-          items: [],
-          subtotal: '',
-          tax: '',
-          total: ''
-        }
-        formatSale.tax = Number(sale.tax)
-        formatSale.subtotal = Number(sale.subtotal)
-        formatSale.total = Number(sale.total)
-        for (let item of sale.items) {
-          let formatItem = {}
-          formatItem.price = Number(item.price)
-          formatItem.amount = Number(item.amount)
-          formatItem.quantity = Number(item.quantity)
-          formatItem.product_id = item.product_id
-          formatItem.product_name = item.product_name
-          formatSale.items.push(formatItem)
-        }
-        formatSales.push(formatSale)
-      }
-      return responses.OK(formatSales)
+      let formatS = formatSales(sales)
+      return responses.OK(formatS)
     } catch (error) {
       console.log(error)
       return responses.SERVER_ERROR
@@ -55,6 +60,7 @@ module.exports = {
       return responses.SERVER_ERROR
     }
   },
+  // Gets the sum of sales per month
   async getPerMonth () {
     try {
       const sales = await SalesModel.getPerMonth()
@@ -68,6 +74,19 @@ module.exports = {
         formatSales.push(formatSale)
       }
       return responses.OK(formatSales)
+    } catch (error) {
+      if (error.type) {
+        return responses.CUSTOM_ERROR(error)
+      }
+      return responses.SERVER_ERROR
+    }
+  },
+  // Gets all the sales from one month + year
+  async getFromMonth ({ month, year }) {
+    try {
+      const sales = await SalesModel.getFromMonth({ month, year })
+      let formatS = formatSales(sales)
+      return responses.OK(formatS)
     } catch (error) {
       if (error.type) {
         return responses.CUSTOM_ERROR(error)
