@@ -6,8 +6,16 @@ M# Moduloes
 
 TODO
 [ ] listar todos los componenetes a probar
+	[ ] pedir el id del cliente que muestre la lista
+	[ ] ponga un estado de venta como default
+	[ ] ver la lista de productos con el codigo y anadirlos
+	[ ] mostrar la cantidad disponible
+	[ ] validar en el back la cantidad disponible de cada producto no sea menor a la que sigue y mostrar
+		mensaje de que sirve
+[ ] estados de ventas
+	[ ] implementar estados de las ventas en back con enum
+	[ ] estados de ventas en el front
 [ ] dar ideas de mejorar la interacion en el front
-[ ] 
 
 Testear
 [ ] user controller, routes y model
