@@ -1,16 +1,25 @@
 const express = require('express')
 const app = express()
 const { jwt, middlewareTesting } = require('../utils/middlewares')
+const UserController = require('../controllers/user.controller')
 const { isTesting } = require('../config')
 const jwtMiddleware = middlewareTesting(isTesting, jwt)
-// const LoginController = require('../controllers/user.controller')
+app.route('*').all(jwtMiddleware)
 
-// get all
+// esto es necesario?
+// // create
+// app
+//   .route('/')
+//   .post(async (req, res) => {
+//     let resp = await UserController.create(req.body)
+//     return res.status(resp.stateCode).send(resp)
+//   })
+
+// // get all
 // app
 //   .route('/')
 //   .get(async (req, res) => {
-//     let { id, password } = req.body
-//     let resp = await LoginController.login(id, password)
+//     let resp = await UserController.getAll()
 //     return res.status(resp.stateCode).send(resp)
 //   })
 

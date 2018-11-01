@@ -24,6 +24,5 @@ test('get all', async t => {
   let userObj = new UsersModel(user)
   await userObj.create()
   let res = await request(app).post(`/api/user`)
-  console.log(res.body)
   t.is(true, true)
 })

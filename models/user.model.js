@@ -32,6 +32,14 @@ UserSchema.statics = {
     return new Promise(function (resolve) {
       resolve(self.findOne({ $and: [{ id }, { password }] }))
     })
+  },
+  getAll () {
+    return new Promise((resolve, reject) => {
+      this.find({}).exec((err, doc) => {
+        if (err) reject(err)
+        resolve(doc)
+      })
+    })
   }
 }
 

@@ -1,15 +1,33 @@
-const router = require('express').Router()
+const express = require('express')
+const app = express()
 const SalesController = require('../controllers/sales.controller')
 const { jwt, middlewareTesting } = require('../utils/middlewares')
 const { isTesting } = require('../config')
 const jwtMiddleware = middlewareTesting(isTesting, jwt)
+app.route('*').all(jwtMiddleware)
 
 // create
-router.post('/', jwtMiddleware, SalesController.storeSale)
+app
+  .route('/')
+  .post(async (req, res) => {
+    let resp = await SalesController.create(req.body)
+    return res.status(resp.stateCode).send(resp)
+  })
 
 // get all
-router.get('/', jwtMiddleware, SalesController.getSales)
+app
+  .route('/')
+  .get(async (req, res) => {
+    let resp = await SalesController.getAll()
+    return res.status(resp.stateCode).send(resp)
+  })
 
-router.get('/months', jwtMiddleware, SalesController.getSalesPerMonth)
+// get per month sales
+app
+  .route('/months')
+  .get(async (req, res) => {
+    let resp = await SalesController.getPerMonth()
+    return res.status(resp.stateCode).send(resp)
+  })
 
-module.exports = router
+module.exports = app

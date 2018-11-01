@@ -4,44 +4,38 @@ M# Moduloes
 - Clients
 - Product
 
-[ ] hacer testeable los controllers y routers
-[ ] testing folder app probar con login primero
-[ ] db dump crear para pruebas con front
-[ ] eslint config
-[ ] ver codigo de mejorar legibilidad y configuracion de archivos que de menos trabajo
-[ ] ver otros proyectos codigo legible
+TODO
+[ ] listar todos los componenetes a probar
+[ ] dar ideas de mejorar la interacion en el front
+[ ] 
 
-this.findOne(criteria, projection, options).populate(populate).exec()
-20 ya tener todo de 
+Testear
+[ ] sales controller y router y model
+[ ] sales test
+[ ] user controller, routes y model
+[ ] user test
+[ ] db dump para pruebas
+[ ] modulo de logger
+# personas
+[ ] nivel de permisos
+	[ ] tipos de gerentes => ingreso de productos de inventario, administradores, usuarios
+# inventario
 [ ] inventario api, front
-	agregar inventario
-	ver todos inventarios
 	[] por cada venta que se realiza, eliminar de existencia los productos
 	[] lista de productos, link con ventas para hacer el egreso de los productos eliminar de existencia.
 	[] inventario de productos, no todos los productos gravan iva
 	[] poder registar el ingreso y el egreso de la materia prima. Distincion entre materia prima y elaborados
 	[] balance de las cosas que compra y los ingresos de las ventas de cada producto
-    [] Ingresar razon de disminucion de los productos eliminacion de productos manualmente
-
-[ ] landing page
-[ ] nivel de permisos
-[ ] tipos de gerentes => ingreso de productos de inventario, administradores, usuarios
-[ ] proteccion de rutas api
-[ ] db init mejorado
+	[] Ingresar razon de disminucion de los productos eliminacion de productos manualmente
+# ventas
 [ ] ventas tiene estados sale.model estados ''
 [ ] llevar la cantidad de las ventas por cobrar, para llevar el track cuanto va pagando
 
-[ ] dashobard, pagina que muestra los resumenes de Ventas, Deudas, Cuentas por cobrar, Inventario
-
 inventario
-
-
-[] controlar el tiempo que esta en la pagina cada usuario
-[] cada usuario tiene que tener el perfil que se puede actualizar
-
+[ ] controlar el tiempo que esta en la pagina cada usuario
+[ ] cada usuario tiene que tener el perfil que se puede actualizar
 [ ] resumen de ventas por dia, en total. Graficas por mes de ventas y en que cosas
 [ ] ventas cosas
 [ ] por cada venta el inventario se actualizar
 [ ] gastos de cosas
 [ ] documentacion
-[ ] - hacer un logger de todo

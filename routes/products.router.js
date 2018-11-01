@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-var ProductController = require('../controllers/products.controller')
+const ProductController = require('../controllers/products.controller')
 const { jwt, middlewareTesting } = require('../utils/middlewares')
 const { isTesting } = require('../config')
 const jwtMiddleware = middlewareTesting(isTesting, jwt)

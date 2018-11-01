@@ -1,92 +1,78 @@
 const SalesModel = require('../models/sale.model')
-const response = require('../utils/responses')
-
-const storeSale = (req, res) => {
-  let sale = new SalesModel({
-    client_id: req.body.client_id,
-    date: req.body.date,
-    client_name: req.body.client_name,
-    client_phone: req.body.client_phone,
-    client_address: req.body.client_address,
-    items: req.body.items,
-    subtotal: req.body.subtotal,
-    tax: req.body.tax,
-    total: req.body.total,
-    status: req.body.status,
-    due_date: req.body.due_date
-  })
-  sale.storeSale((err) => {
-    if (err) {
-      console.log(err)
-      return response.serverError(res)
-    }
-    return response.ok(res, sale)
-  })
-}
-const getSalesPerMonth = (req, res) => {
-  SalesModel.getSalesPerMonth((err, sales) => {
-    if (err) {
-      console.log(err)
-      return response.serverError(res)
-    }
-
-    let formatSales = []
-
-    for (let sale of sales) {
-      let formatSale = {
-        date: sale.date,
-        total: ''
-      }
-      formatSale.total = Number(sale.total)
-      formatSales.push(formatSale)
-    }
-    console.log(formatSales)
-    return response.ok(res, formatSales)
-  })
-}
-const getSales = (req, res) => {
-  SalesModel.getSales((err, sales) => {
-    if (err) {
-      console.log(err)
-      return response.serverError(res)
-    }
-    let formatSales = []
-
-    for (let sale of sales) {
-      let formatSale = {
-        id: sale._id,
-        client_id: sale.client_id,
-        date: sale.date,
-        client_name: sale.client_name,
-        client_phone: sale.client_phone,
-        client_address: sale.client_address,
-        status: sale.status,
-        due_date: sale.due_date,
-        items: [],
-        subtotal: '',
-        tax: '',
-        total: ''
-      }
-      formatSale.tax = Number(sale.tax)
-      formatSale.subtotal = Number(sale.subtotal)
-      formatSale.total = Number(sale.total)
-      for (let item of sale.items) {
-        let formatItem = {}
-        formatItem.price = Number(item.price)
-        formatItem.amount = Number(item.amount)
-        formatItem.quantity = Number(item.quantity)
-        formatItem.product_id = item.product_id
-        formatItem.product_name = item.product_name
-        formatSale.items.push(formatItem)
-      }
-      formatSales.push(formatSale)
-    }
-    return response.ok(res, formatSales)
-  })
-}
+const responses = require('../utils/responses')
 
 module.exports = {
-  storeSale,
-  getSales,
-  getSalesPerMonth
+  async getAll () {
+    try {
+      const sales = await SalesModel.getAll()
+      let formatSales = []
+      for (let sale of sales) {
+        let formatSale = {
+          id: sale._id,
+          client_id: sale.client_id,
+          date: sale.date,
+          client_name: sale.client_name,
+          client_phone: sale.client_phone,
+          client_address: sale.client_address,
+          status: sale.status,
+          due_date: sale.due_date,
+          items: [],
+          subtotal: '',
+          tax: '',
+          total: ''
+        }
+        formatSale.tax = Number(sale.tax)
+        formatSale.subtotal = Number(sale.subtotal)
+        formatSale.total = Number(sale.total)
+        for (let item of sale.items) {
+          let formatItem = {}
+          formatItem.price = Number(item.price)
+          formatItem.amount = Number(item.amount)
+          formatItem.quantity = Number(item.quantity)
+          formatItem.product_id = item.product_id
+          formatItem.product_name = item.product_name
+          formatSale.items.push(formatItem)
+        }
+        formatSales.push(formatSale)
+      }
+      return responses.OK(formatSales)
+    } catch (error) {
+      console.log(error)
+      return responses.SERVER_ERROR
+    }
+  },
+  async create ({ client_id, date, client_name, client_phone, client_address, items, subtotal, tax, total, status, due_date }) {
+    try {
+      let sale = arguments[0]
+      let saleObj = new SalesModel(sale)
+      await SalesModel.init()
+      let created = await saleObj.create()
+      return responses.OK(created)
+    } catch (error) {
+      if (error.type) {
+        return responses.CUSTOM_ERROR(error)
+      }
+      return responses.SERVER_ERROR
+    }
+  },
+  async getPerMonth () {
+    try {
+      const sales = await SalesModel.getPerMonth()
+      let formatSales = []
+      for (let sale of sales) {
+        let formatSale = {
+          date: sale.date,
+          total: ''
+        }
+        formatSale.total = Number(sale.total)
+        formatSales.push(formatSale)
+      }
+      return responses.OK(formatSales)
+    } catch (error) {
+      if (error.type) {
+        return responses.CUSTOM_ERROR(error)
+      }
+      return responses.SERVER_ERROR
+    }
+  }
 }

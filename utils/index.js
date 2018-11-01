@@ -26,9 +26,13 @@ module.exports = {
    * @param {object} baseObject Object base mocking
    * @param {object} objectResponse Compare object from db
    * @param {object} t Test object from ava test runner
+   * @param {Array} ignoreProperty Properties that have been ignored
    */
-  testProperty (baseObject, objectResponse, t) {
+  testProperty (baseObject, objectResponse, t, ignoreProperty) {
     for (let property in baseObject) {
+      if (ignoreProperty && ignoreProperty.includes('date')) {
+        continue
+      }
       t.is(baseObject[property], objectResponse[property], `Object property error: ${property}`)
     }
   }
