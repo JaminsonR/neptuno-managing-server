@@ -1,4 +1,5 @@
 const SalesModel = require('../models/sale.model')
+const ProductModel = require('../models/product.model')
 const responses = require('../utils/responses')
 
 function formatSales (sales) {
@@ -49,6 +50,46 @@ module.exports = {
   async create ({ client_id, date, client_name, client_phone, client_address, items, subtotal, tax, total, status, due_date }) {
     try {
       let sale = arguments[0]
+      let items = sale.items
+      let idsItems = items.reduce((result, item) => {
+        result.push(item['id'])
+        return result
+      }, [])
+      let products = await ProductModel.getAllById(idsItems)
+
+      let itemsById = items.reduce((result, item) => {
+        let id = item['id']
+        result[id] = item
+        return result
+      }, {})
+
+      let productsById = products.reduce((result, item) => {
+        let id = item['id']
+        result[id] = item
+        return result
+      }, {})
+
+      let productsNotAvailable = []
+      let productsUpdate = []
+      for (let product in productsById) {
+        let stockProduct = productsById[product]['stock']
+        let stockItem = itemsById[product]['stock']
+        let areProductsForSale = stockProduct >= stockItem
+        if (!areProductsForSale) {
+          productsNotAvailable.push(itemsById[product])
+        } else {
+          let productUpdate = productsById[product]
+          productUpdate.stock = stockProduct - stockItem
+          productsUpdate.push(productUpdate)
+        }
+      }
+
+      let areProductsNotAvailable = productsNotAvailable.length !== 0
+      if (areProductsNotAvailable) {
+        return responses.NOT_OK(productsNotAvailable)
+      }
+
+      await ProductModel.updateBulk(productsUpdate)
       let saleObj = new SalesModel(sale)
       await SalesModel.init()
       let created = await saleObj.create()

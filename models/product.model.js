@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const _ = require('lodash')
 const errors = require('../config/errors')
 const Schema = mongoose.Schema
 mongoose.Promise = global.Promise
@@ -20,6 +21,15 @@ ProductSchema.options.toJSON = {
     delete ret.__v
     return ret
   }
+}
+
+function UpdateOne (product, self) {
+  let { id, name, taxable, price, stock, isPrime } = product
+  return new Promise((resolve, reject) => {
+    return self.updateOne({ id }, { $set: { id, name, taxable, price, stock, isPrime } }).then((state) => {
+      resolve(!!state.nModified)
+    })
+  })
 }
 
 ProductSchema.methods = {
@@ -47,6 +57,20 @@ ProductSchema.statics = {
       })
     })
   },
+  getAllById (ids) {
+    return new Promise((resolve, reject) => {
+      this.find({ id: { $in: ids } }).exec((err, doc) => {
+        if (err) reject(err)
+        let products = []
+        for (let product of doc) {
+          product['price'] = Number(product['price'])
+          let productTmp = JSON.parse(JSON.stringify(product))
+          products.push(productTmp)
+        }
+        resolve(products)
+      })
+    })
+  },
   get (id, select = '-_id') {
     return new Promise((resolve, reject) => {
       this.findOne({ id }).exec((err, doc) => {
@@ -58,6 +82,22 @@ ProductSchema.statics = {
         product['price'] = Number(product['price'])
         let productTmp = JSON.parse(JSON.stringify(product))
         return resolve(productTmp)
+      })
+    })
+  },
+  updateBulk (products) {
+    return new Promise((resolve, reject) => {
+      let promises = []
+      for (let product of products) {
+        promises.push(UpdateOne(product, this))
+      }
+      Promise.all(promises).then((values) => {
+        let allWereUpdate = _.every(values)
+        if (allWereUpdate) {
+          resolve(values)
+        } else {
+          reject(new Error('Por alguna razon no se actualizaron todos??, que debemos hacer???')) // FIXME: hacer transactions en mongodb?
+        }
       })
     })
   }
