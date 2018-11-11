@@ -52,13 +52,13 @@ module.exports = {
       let sale = arguments[0]
       let items = sale.items
       let idsItems = items.reduce((result, item) => {
-        result.push(item['id'])
+        result.push(item['product_id'])
         return result
       }, [])
       let products = await ProductModel.getAllById(idsItems)
 
       let itemsById = items.reduce((result, item) => {
-        let id = item['id']
+        let id = item['product_id']
         result[id] = item
         return result
       }, {})
@@ -73,7 +73,7 @@ module.exports = {
       let productsUpdate = []
       for (let product in productsById) {
         let stockProduct = productsById[product]['stock']
-        let stockItem = itemsById[product]['stock']
+        let stockItem = itemsById[product]['quantity']
         let areProductsForSale = stockProduct >= stockItem
         if (!areProductsForSale) {
           productsNotAvailable.push(itemsById[product])
