@@ -22,4 +22,12 @@ app
     return res.status(resp.stateCode).send(resp)
   })
 
+// modify existence
+app
+  .route('/existence/:id/:amount')
+  .post(async (req, res) => {
+    let resp = await ProductController.modifyStock(req.params)
+    return res.status(resp.stateCode).send(resp)
+  })
+
 module.exports = app

@@ -52,3 +52,29 @@ test.serial('create:unique', async t => {
   let created = await ProductModel.getAll()
   t.is(created.length, 1)
 })
+
+test.serial('update:existence:add', async t => {
+  let [product] = products
+  let productObj = new ProductModel(product)
+  await productObj.create()
+  let { id } = product
+  let amount = 1
+  let res = await request(app).post(`/api/products/existence/${id}/${amount}`).send(product)
+  t.is(res.body.state, true)
+  t.is(res.body.stateCode, 200)
+  let updated = await ProductModel.get(id)
+  t.is(updated.stock, 4)
+})
+
+test.serial('update:existence:delete', async t => {
+  let [product] = products
+  let productObj = new ProductModel(product)
+  await productObj.create()
+  let { id } = product
+  let amount = -1
+  let res = await request(app).post(`/api/products/existence/${id}/${amount}`).send(product)
+  t.is(res.body.state, true)
+  t.is(res.body.stateCode, 200)
+  let updated = await ProductModel.get(id)
+  t.is(updated.stock, 2)
+})

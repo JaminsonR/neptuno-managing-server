@@ -24,5 +24,17 @@ module.exports = {
       }
       return responses.SERVER_ERROR
     }
+  },
+  // amount is positive or negative
+  async modifyStock ({ id, amount }) {
+    try {
+      const wasUpdated = await ProductModel.modifyExistence({ id, amount })
+      if (!wasUpdated) {
+        return responses.NOT_OK('Error al actualizar')
+      }
+      return responses.OK('Actualizado correctamente')
+    } catch (error) {
+      return responses.SERVER_ERROR
+    }
   }
 }

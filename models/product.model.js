@@ -9,7 +9,11 @@ const ProductSchema = new Schema({
   name: { type: String, required: true },
   taxable: { type: Boolean, required: true },
   price: { type: mongoose.Schema.Types.Decimal128, required: true },
-  stock: { type: Number, default: 0 },
+  stock: {
+    type: Number,
+    default: 0,
+    min: [0, 'No debe pasar de cero']
+  },
   isPrime: { type: Boolean, default: true }
 }, { collection: 'products' })
 
@@ -98,6 +102,14 @@ ProductSchema.statics = {
         } else {
           reject(new Error('Por alguna razon no se actualizaron todos??, que debemos hacer???')) // FIXME: hacer transactions en mongodb?
         }
+      })
+    })
+  },
+  modifyExistence ({ id, amount }) {
+    let self = this
+    return new Promise((resolve, reject) => {
+      return self.updateOne({ id }, { $set: { stock: amount } }).then((state) => {
+        resolve(!!state.nModified)
       })
     })
   }
