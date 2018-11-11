@@ -7,13 +7,13 @@ const jwtMiddleware = middlewareTesting(isTesting, jwt)
 app.route('*').all(jwtMiddleware)
 
 // esto es necesario?
-// // create
-// app
-//   .route('/')
-//   .post(async (req, res) => {
-//     let resp = await UserController.create(req.body)
-//     return res.status(resp.stateCode).send(resp)
-//   })
+// create
+app
+  .route('/register')
+  .post(async (req, res) => {
+    let resp = await UserController.create(req.body)
+    return res.status(resp.stateCode).send(resp)
+  })
 
 // // get all
 // app
