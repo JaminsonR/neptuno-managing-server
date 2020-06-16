@@ -11,7 +11,7 @@ module.exports = {
       return responses.SERVER_ERROR;
     }
   },
-  async create({ id, name, taxable, price, stock, isPrime }) {
+  async create({ id, name, isTaxable, price, bulkPrice, stock, isPrime }) {
     try {
       let product = arguments[0];
       let productObj = new ProductModel(product);
@@ -26,15 +26,16 @@ module.exports = {
     }
   },
   // amount is positive or negative
-  async update({ id, name, price, taxable, stock, isPrime }) {
+  async update({ id, name, price, bulkPrice, isTaxable, stock, isPrime }) {
     try {
       const wasUpdated = await ProductModel.update({
         id,
         name,
         price,
-        taxable,
+        bulkPrice,
+        isTaxable,
         stock,
-        isPrime
+        isPrime,
       });
       if (!wasUpdated) {
         return responses.NOT_OK("Error al actualizar");
@@ -43,5 +44,5 @@ module.exports = {
     } catch (error) {
       return responses.SERVER_ERROR;
     }
-  }
+  },
 };

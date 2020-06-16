@@ -34,6 +34,7 @@ Testear
 	[] balance de las cosas que compra y los ingresos de las ventas de cada producto
 	[] Ingresar razon de disminucion de los productos eliminacion de productos manualmente
 # ventas
+[ ] total  es igual al subtotal - descuento + iva
 [ ] ventas tiene estados sale.model estados ''
 [ ] llevar la cantidad de las ventas por cobrar, para llevar el track cuanto va pagando
 
