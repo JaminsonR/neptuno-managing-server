@@ -72,18 +72,23 @@ module.exports = {
       let items = sale.items;
       let idsItems = items.reduce((result, item) => {
         result.push(item["product_id"]);
+
         return result;
       }, []);
       let products = await ProductModel.getAllById(idsItems);
 
-      // create dict-like structure for sale items itemsById = {productId: saleItem}
+      // create dict-like structure for sale items. itemsById = {productId: [saleItem]}
       let itemsById = items.reduce((result, item) => {
         let id = item["product_id"];
-        result[id] = item;
+        if (result[id]) {
+          result[id].push(item);
+          return result;
+        }
+        result[id] = [item];
         return result;
       }, {});
 
-      // create dict-like structure for sale products productsById = {productId: product}
+      // create dict-like structure for sale products. productsById = {productId: product}
       let productsById = products.reduce((result, item) => {
         let id = item["id"];
         result[id] = item;
@@ -95,56 +100,78 @@ module.exports = {
       let productsUpdate = [];
       let wrongItemPrices = [];
       let wrongItemAmounts = [];
-      for (let product in productsById) {
-        let stockProduct = productsById[product]["stock"];
-        let stockItem = itemsById[product]["quantity"];
-        let itemPrice = itemsById[product]["price"];
-        let itemDiscount = itemsById[product]["itemDiscount"];
-        let itemAmount = itemsById[product]["amount"];
-        let productBulkPrice = productsById[product]["bulkPrice"];
-        let productPrice = productsById[product]["price"];
-        let isItemBulk = itemsById[product]["isBulk"];
-
-        // check that item has available quantity for sale
-        let areProductsForSale = stockProduct >= stockItem;
-
-        // check if item price should be bulk or not
-        let calculatedItemPrice = isItemBulk ? productBulkPrice : productPrice;
-        let isItemPriceCorrect = calculatedItemPrice == itemPrice;
-
-        // check if item total amount has been calculated correctly
-        let calculatedAmount = itemPrice * stockItem - itemDiscount;
-        let isItemAmountWrong = calculatedAmount == itemAmount;
-
-        if (!areProductsForSale) {
-          productsNotAvailable.push(itemsById[product]);
-        } else if (isItemPriceCorrect) {
-          wrongItemPrices.push(itemsById[product]);
-        } else if (isItemAmountWrong) {
-          wrongItemAmounts.push(itemsById[product]);
+      let wrongProducts = [];
+      for (let product in itemsById) {
+        if (!productsById[product]) {
+          wrongProducts.push(itemsById[product]);
         } else {
           // track products that will need stock update
           let productUpdate = productsById[product];
-          productUpdate.stock = stockProduct - stockItem;
+          for (let item of itemsById[product]) {
+            let stockProduct = productsById[product]["stock"];
+            let stockItem = item["quantity"];
+            let itemPrice = item["price"];
+            let itemDiscount = item["itemDiscount"];
+            let itemAmount = item["amount"];
+            let productBulkPrice = productsById[product]["bulkPrice"];
+            let productPrice = productsById[product]["price"];
+            let isItemBulk = item["isBulk"];
+
+            // check that item has available quantity for sale
+            let areProductsForSale = stockProduct >= stockItem;
+
+            // check if item price should be bulk or not
+            let calculatedItemPrice = isItemBulk
+              ? productBulkPrice
+              : productPrice;
+            let isItemPriceCorrect = calculatedItemPrice == itemPrice;
+
+            // check if item total amount has been calculated correctly
+            let calculatedAmount = (itemPrice - itemDiscount) * stockItem;
+            let isItemAmountCorrect = calculatedAmount == itemAmount;
+
+            if (!areProductsForSale) {
+              productsNotAvailable.push(item);
+            } else if (!isItemPriceCorrect) {
+              wrongItemPrices.push(item);
+            } else if (!isItemAmountCorrect) {
+              wrongItemAmounts.push(item);
+            } else {
+              // stock update
+              productUpdate.stock = productUpdate.stock - stockItem;
+            }
+          }
           productsUpdate.push(productUpdate);
         }
+      }
+
+      // an product in an item does not exist, return error
+      let doProductsExist = wrongProducts.length == 0;
+      if (!doProductsExist) {
+        console.log("an product in an item does not exist, return error");
+        return responses.NOT_OK(wrongProducts);
       }
 
       // an item does not have enogh stock, return error
       let areProductsNotAvailable = productsNotAvailable.length !== 0;
       if (areProductsNotAvailable) {
+        console.log("an item does not have enogh stock, return error");
         return responses.NOT_OK(productsNotAvailable);
       }
 
       // an item does not have the right price, return error
       let areItemPricesWrong = wrongItemPrices.length !== 0;
       if (areItemPricesWrong) {
+        console.log("an item does not have the right price, return error");
         return responses.NOT_OK(wrongItemPrices);
       }
 
       // an item amount has not been calculated properly, return error
       let areItemAmountsWrong = wrongItemAmounts.length !== 0;
       if (areItemAmountsWrong) {
+        console.log(
+          "an item amount has not been calculated properly, return error"
+        );
         return responses.NOT_OK(wrongItemAmounts);
       }
 
@@ -161,6 +188,7 @@ module.exports = {
       if (error.type) {
         return responses.CUSTOM_ERROR(error);
       }
+      console.log("something bad happened, return error");
       return responses.SERVER_ERROR;
     }
   },
