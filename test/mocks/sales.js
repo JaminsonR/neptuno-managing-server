@@ -7,7 +7,7 @@ module.exports = [
     client_address: "Mapasingue pues",
     items: [
       {
-        product_id: "02",
+        product_id: "04",
         product_name: "Mi producto numero 2",
         price: 2560,
         quantity: 3,
