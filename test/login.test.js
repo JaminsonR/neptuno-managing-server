@@ -29,7 +29,6 @@ test("login ok", async (t) => {
   t.is(res.body.state, true);
   t.is(res.body.stateCode, 200);
   t.is(typeof res.body.data, "string");
-  console.log(res);
 });
 
 test("login fail", async (t) => {
