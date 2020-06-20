@@ -9,8 +9,8 @@ const ProductSchema = new Schema(
     id: { type: Schema.Types.String, required: true, unique: true },
     name: { type: String, required: true },
     isTaxable: { type: Boolean, required: true },
-    price: { type: mongoose.Schema.Types.Decimal128, required: true },
-    bulkPrice: { type: mongoose.Schema.Types.Decimal128, required: true },
+    price: { type: mongoose.Schema.Types.Number, required: true },
+    bulkPrice: { type: mongoose.Schema.Types.Number, required: true },
     stock: {
       type: Number,
       default: 0,
